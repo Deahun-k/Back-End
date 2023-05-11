@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>To-Do List</title>
+	<style>
+		.done {
+			text-decoration: line-through;
+		}
+	</style>
+</head>
+<body>
+	<h1>To-Do List</h1>
+	<input type="text" id="newTaskInput" placeholder="Add new task">
+	<button onclick="addNewTask()">Add</button>
+	<ul id="taskList">
+	</ul>
+	<script>
+		const newTaskInput = document.getElementById("newTaskInput");
+		const taskList = document.getElementById("taskList");
+
+		function addNewTask() {
+			// 새로운 할 일 아이템 생성
+			const newTask = document.createElement("li");
+			newTask.innerText = newTaskInput.value;
+			newTaskInput.value = "";
+
+			// 할 일 목록에 아이템 추가
+			taskList.appendChild(newTask);
+
+			// 할 일 아이템 클릭 시 완료 토글
+			newTask.addEventListener("click", () => {
+				newTask.classList.toggle("done");
+			});
+
+			// 삭제 버튼 추가
+			const deleteButton = document.createElement("button");
+			deleteButton.innerText = "Delete";
+			newTask.appendChild(deleteButton);
+			deleteButton.addEventListener("click", () => {
+				taskList.removeChild(newTask);
+			});
+
+			// 수정 기능 추가
+			const editButton = document.createElement("button");
+			editButton.innerText = "Edit";
+			newTask.appendChild(editButton);
+			editButton.addEventListener("click", () => {
+				const updatedTask = prompt("Update task", newTask.innerText);
+				if (updatedTask !== null) {
+					newTask.innerText = updatedTask;
+				}
+			});
+		}
+	</script>
+</body>
+</html>
